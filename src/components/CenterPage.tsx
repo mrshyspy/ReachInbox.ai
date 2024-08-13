@@ -26,7 +26,6 @@ const CenterPage: React.FC<Props> = ({ selectedThread }) => {
   const [showPopUp, setShowPopUp] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [selectedMail, setSelectedMail] = useState<MailData[]>([]);
-  const [loading, setLoading] = useState(true); // Add loading state
 
   const togglePopUp = () => {
     setShowPopUp(!showPopUp);
@@ -69,7 +68,6 @@ const CenterPage: React.FC<Props> = ({ selectedThread }) => {
 
   useEffect(() => {
     const fetchMail = async () => {
-      setLoading(true); // Set loading to true at the start
       if (selectedThread) {
         try {
           const token = localStorage.getItem("token");
@@ -99,7 +97,6 @@ const CenterPage: React.FC<Props> = ({ selectedThread }) => {
           },
         ]);
       }
-      setLoading(false); // Set loading to false when data is fetched
     };
     fetchMail();
   }, [selectedThread, showDelete]);
@@ -137,7 +134,7 @@ const CenterPage: React.FC<Props> = ({ selectedThread }) => {
         </div>
       </div>
 
-      <div className={`transition duration-300 ${loading ? 'blur-sm' : ''}`}> {/* Apply blur effect */}
+      <div>
         {selectedMail.map((mail) => (
           <Mail key={mail.id} {...mail} />
         ))}
