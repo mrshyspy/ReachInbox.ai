@@ -2,16 +2,10 @@
 function Spinner() {
   return (
     <div className="flex justify-center items-center h-full">
-      <div style={{
-        width: '48px',
-        height: '48px',
-        border: '5px solid #0000FF',
-        borderTopColor: 'transparent',
-        borderRadius: '50%',
-        display: 'inline-block',
-        boxSizing: 'border-box',
-        animation: 'spin 1s linear infinite'
-      }}></div>
+      <div
+        className="w-16 h-16 border-8 border-blue-600 dark:border-blue-400 border-t-transparent border-solid rounded-full animate-spin"
+        style={{ borderWidth: '4px' }} // Optional: Override border width if needed
+      ></div>
     </div>
   );
 }
