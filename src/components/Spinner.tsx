@@ -2,10 +2,7 @@
 function Spinner() {
   return (
     <div className="flex justify-center items-center h-full">
-      <div
-        className="w-16 h-16 border-8 border-blue-600 dark:border-blue-400 border-t-transparent border-solid rounded-full animate-spin"
-        style={{ borderWidth: '4px' }} // Optional: Override border width if needed
-      ></div>
+      <div className="w-12 h-12 border-4 border-blue-500 dark:border-blue-300 border-t-transparent border-solid rounded-full animate-spin"></div>
     </div>
   );
 }
