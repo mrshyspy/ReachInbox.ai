@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import CustomMail from "./CustomMail";
 import { MdOutlineExpand } from "react-icons/md";
 import { FaReply } from "react-icons/fa";
 import { SlArrowDown } from "react-icons/sl";
 import { GoDotFill } from "react-icons/go";
 import DeletePopUp from "./DeletePopUp";
+import CustomMail from "./CustomMail"; // Import CustomMail component
 
 interface MailData {
   id: number;
@@ -26,6 +26,7 @@ const CenterPage: React.FC<Props> = ({ selectedThread }) => {
   const [showPopUp, setShowPopUp] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [selectedMail, setSelectedMail] = useState<MailData[]>([]);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   const togglePopUp = () => {
     setShowPopUp(!showPopUp);
@@ -68,6 +69,7 @@ const CenterPage: React.FC<Props> = ({ selectedThread }) => {
 
   useEffect(() => {
     const fetchMail = async () => {
+      setLoading(true); // Set loading to true at the start
       if (selectedThread) {
         try {
           const token = localStorage.getItem("token");
@@ -79,7 +81,6 @@ const CenterPage: React.FC<Props> = ({ selectedThread }) => {
               },
             }
           );
-          // @ts-ignore
           setSelectedMail(res.data.data);
         } catch (error) {
           console.error("Error fetching mail:", error);
@@ -98,6 +99,7 @@ const CenterPage: React.FC<Props> = ({ selectedThread }) => {
           },
         ]);
       }
+      setLoading(false); // Set loading to false when data is fetched
     };
     fetchMail();
   }, [selectedThread, showDelete]);
@@ -135,7 +137,7 @@ const CenterPage: React.FC<Props> = ({ selectedThread }) => {
         </div>
       </div>
 
-      <div>
+      <div className={`transition duration-300 ${loading ? 'blur-sm' : ''}`}> {/* Apply blur effect */}
         {selectedMail.map((mail) => (
           <Mail key={mail.id} {...mail} />
         ))}
@@ -153,7 +155,7 @@ const CenterPage: React.FC<Props> = ({ selectedThread }) => {
           </div>
         </div>
       </div>
-      {/* @ts-ignore */}
+
       <div className="mx-8">
         {showPopUp && (
           <CustomMail
@@ -162,12 +164,14 @@ const CenterPage: React.FC<Props> = ({ selectedThread }) => {
           />
         )}
       </div>
+
       <div
         className="cursor-pointer flex items-center fixed bottom-0 ml-10 mb-10 bg-gradient-to-r from-[#4B63DD] to-[#0524BFFC] text-white rounded-md px-10 py-2 hover:from-[#364ba9] hover:to-[#042089] dark:from-[#3B4CCC] dark:to-[#0527BF] dark:hover:from-[#2d3d8a] dark:hover:to-[#041d7c]"
         onClick={togglePopUp}
       >
         <FaReply className="mr-2 text-xl" /> Reply
       </div>
+
       {showDelete && (
         <DeletePopUp
           onCancel={() => setShowDelete(false)}
