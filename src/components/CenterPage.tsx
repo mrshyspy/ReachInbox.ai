@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+in light theme while loading make the background blure of the middle section : import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { MdOutlineExpand } from "react-icons/md";
 import { FaReply } from "react-icons/fa";
